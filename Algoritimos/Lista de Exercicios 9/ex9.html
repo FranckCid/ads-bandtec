@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ex. 9</title>
+</head>
+
+<body>
+    <form>
+        Andar atual <input type="number" id="atual"><br>
+        Andar solicitado <input type="number" id="solicitado"><br>
+        <button type="button" onclick="partir()">Partir</button>
+        <div id="msg"></div>
+    </form>
+</body>
+
+</html>
+
+<script>
+
+    function partir() {
+        var valAtual = Number(atual.value)
+        var valSolicitado = Number(solicitado.value)
+        var contador = valAtual
+
+        msg.innerHTML = ''
+
+        if ((valAtual < 0 || valAtual > 20) || (valSolicitado < 0 || valSolicitado > 20)) {
+            alert("Andares válidos: entre 0 e 20")
+        } else {
+            msg.innerHTML += valAtual < valSolicitado ? 'Subindo<br/>' : 'Descendo<br/>'
+            while (contador != valSolicitado) {
+                msg.innerHTML += `Elevador no andar ${contador}<br/>`
+                contador += valAtual - contador
+            }
+        }
+    }
+
+    function backup() {
+        var valAtual = Number(atual.value)
+        var valSolicitado = Number(solicitado.value)
+        var contador = valAtual
+
+        if ((valAtual < 0 || valAtual > 20) || (valSolicitado < 0 || valSolicitado > 20)) {
+            alert("Andares válidos: entre 0 e 20")
+        } else {
+            if (valAtual == valSolicitado) {
+                msg.innerHTML += 'Elevador vai continuar onde está<br/>'
+            } else if (valAtual > valSolicitado) {
+                msg.innerHTML += 'Descendo<br/>'
+                while (contador > valSolicitado - 1) {
+                    msg.innerHTML += `Elevador no andar ${contador}<br/>`
+                    contador--
+                }
+            } else {
+                msg.innerHTML += 'Subindo<br/>'
+                while (contador < valSolicitado + 1) {
+                    msg.innerHTML += `Elevador no andar ${contador}<br/>`
+                    contador++
+                }
+            }
+        }
+    }
+
+</script>

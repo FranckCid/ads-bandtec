@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="fraseBr" style='display: none'>
+        Vida de casado é boa. Só perde pra de solteiro.
+    </div>
+    <div id="fraseEua" style='display: none'>
+        I always will remember us this way
+    </div>
+    <button type="button" onclick='musica(fraseBr, fraseEua)'>Suesso no Brasil</button>
+    <button type="button" onclick='musica(fraseEua, fraseBr)'>Suesso nos EUA</button>
+</body>
+
+</html>
+
+<script>
+    function musica(mostrar, esconder) {
+        mostrar.style.display = 'block'
+        esconder.style.display = 'none'
+    }
+</script>

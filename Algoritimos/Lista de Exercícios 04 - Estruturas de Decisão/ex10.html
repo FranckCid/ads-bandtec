@@ -1,0 +1,64 @@
+<!-- 
+    Sabe aquelas avaliações por "estrelas" (1 a 5 estrelas) que damos a sites, aplicativos etc? Vamos simular algo parecido aqui.
+    Numa tela pergunte num campo de formulário "Que nota dá para o atendimento?".
+    Ao clicar num botão "Salvar avaliação", o programa deve exibir uma ou mais frases abaixo dele, que podem ser:
+    Caso a nota for entre 0 e 2: Sua avaliação foi negativa (Cor vermelha)
+    Caso a nota for 3: Sua avaliação foi neutra (Cor cinza)
+    Caso a nota for entre 4 e 5: Sua avaliação foi positiva (Cor azul) e, um alerta (função alert()) com a frase Só queria confirmar meus parabéns!.
+    Caso a nota for menor que 0: Não existe avaliação menor que 0! (Cor vermelha escura)
+    Caso a nota for maior que 5: Não existe avaliação maior que 5! (Cor vermelha escura)
+    Dica: Aqui só nos interessa a parte inteira do valor informado ;)
+ -->
+
+<!DOCTYPE html>
+<html lang='pt-br'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Exercício 9</title>
+</head>
+
+<body>
+
+    <form>
+        Nome do aluno <input type='text' id='nome_aluno'><br>
+        Média das continuadas <input type='number' id='continuadas'><br>
+        Média da integrada <input type='number' id='integradas'><br>
+        <button type='button' onclick='validar()'>Verificar Resultado</button>
+    </form>
+    <div id='msg'></div>
+    <img src='' alt='emocao' id='emocao' style='display: none'>
+
+</body>
+
+</html>
+
+<script>
+    function validar() {       
+
+        var nome = nome_aluno.value
+        var cont = continuadas.value
+        var integ = integradas.value
+        var mediaFinal = cont * .2 + integ * .8
+        var frase
+        var cor
+        var imagem
+
+        if(mediaFinal >= 5){
+            frase = `Parabéns, ${nome}, você foi aprovado com média final ${mediaFinal.toFixed(2)}`
+            cor = 'blue'
+            imagem = 'feliz.jpg'
+        }else{
+            frase = `Olá, ${nome}, infelizmente você foi reprovado com média final ${mediaFinal.toFixed(2)}`
+            cor = 'red'
+            imagem = 'triste.jpg'
+        }
+
+        msg.innerHTML = frase
+        msg.style.color = cor
+        emocao.style.display = 'block'
+        emocao.src = imagem
+    }
+</script>

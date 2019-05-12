@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang='pt-br'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Prova - Feira</title>
+</head>
+
+<body>
+    <h2>Prova - Feira</h2>
+    <p>Eis que você vai a feira e precisa organizar o que vai comprar e como vai carregar</p>
+    <br>
+    <form>
+        Quanto alimento pretende comprar? <br /><br />
+
+        Bananas <input type='number' id='qnt_bananas'><br />
+        Brócolis <input type='number' id='qnt_brocolis'><br />
+        Cenouras <input type='number' id='qnt_cenouras'><br />
+        Maçãs <input type='number' id='qnt_macas'><br />
+
+        <br>
+        Qual o preço de cada um? (Valor unitário)<br /><br />
+
+        Bananas <input type='number' id='pr_bananas'><br />
+        Brócolis <input type='number' id='pr_brocolis'><br />
+        Cenouras <input type='number' id='pr_cenouras'><br />
+        Maçãs <input type='number' id='pr_macas'><br />
+
+        <br />
+        Quantos quilos você consegue carregar?<br />
+        <input type='number' id='kg_capacidade'><br />
+
+        <button type='button' onclick='feira()'>Fazer a feira</button>
+
+        <div id="msg" style='display: none'>
+            Valor total das compras: R$ <span id="msg_val_total"></span><br>
+            Peso total das compras: <span id="msg_peso_total"></span> kg
+        </div>
+        <div id="vai_da_n"></div>
+        <div id="mais_frutas"></div>
+        <div id="imagens"></div>
+    </form>
+</body>
+
+</html>
+
+<script>
+
+    function feira() {
+        // Esconde tudo
+        esconder(msg);
+        esconder(mais_frutas);
+        esconder(vai_da_n);
+        esconder(imagens);
+
+        // Converter de grama para kilograma
+        var g2kg = 1000
+        // Peso padrão
+        var kgBananas = 50 / g2kg;
+        var kgBrocolis = 15 / g2kg;
+        var kgCenouras = 30 / g2kg;
+        var kgMacas = 25 / g2kg;
+
+        // Conversão de valores para números
+        var qntBananas = Number(qnt_bananas.value);
+        var qntBrocolis = Number(qnt_brocolis.value);
+        var qntCenouras = Number(qnt_cenouras.value);
+        var qntMacas = Number(qnt_macas.value);
+
+        var prBananas = Number(pr_bananas.value);
+        var prBrocolis = Number(pr_brocolis.value);
+        var prCenouras = Number(pr_cenouras.value);
+        var prMacas = Number(pr_macas.value);
+
+        var kgCapacidade = Number(kg_capacidade.value);
+
+        // Valor subtotal de cada produto
+        var subBananas = qntBananas * prBananas;
+        var subBrocolis = qntBrocolis * prBrocolis;
+        var subCenouras = qntCenouras * prCenouras;
+        var subMacas = qntMacas * prMacas;
+
+        var valTotal = subBananas + subBrocolis + subCenouras + subMacas;
+
+        // Peso subtotal de cada produto
+        var kgBananas = qntBananas * kgBananas;
+        var kgBrocolis = qntBrocolis * kgBrocolis;
+        var kgCenouras = qntCenouras * kgCenouras;
+        var kgMacas = qntMacas * kgMacas;
+
+        var kgTotal = kgBananas + kgBrocolis + kgCenouras + kgMacas;
+
+        // Validar campos de quantidade
+        if ((qntBananas < 0 || qntBananas > 12) ||
+            (qntBrocolis < 0 || qntBrocolis > 12) ||
+            (qntCenouras < 0 || qntCenouras > 12) ||
+            (qntMacas < 0 || qntMacas > 12)
+        ) {
+            alert('Cada produto deve ter entre 0 e 12 de quantidade');
+        } else {
+            // Validar campo de capacidade de peso
+            if (kgCapacidade < .5 || kgCapacidade > 20) {
+                alert('O peso que o usuário aguenta deve ter entre 0.5kg e 20kg');
+            } else {
+                // Exibe subtotal e limpa alertas
+                exibirSubtotal(valTotal, kgTotal);
+                limpar(vai_da_n);
+                limpar(mais_frutas);
+
+                // Alerta caso não seja possível carregar compras
+                if (kgTotal > kgCapacidade) {
+                    alertar(vai_da_n, 'Deu ruim! O usuário não vai conseguir carregar essas compras!', 'red');
+                }
+                // Alerta caso não esteja comprando bananas e maçãs
+                if (qntBananas == 0 && qntMacas == 0) {
+                    alertar(mais_frutas, 'Opa! Você precisa comer mais frutas, viu?!', 'green');
+                }
+                // Exibe imagens de acordo com a quantidade comprada
+                exibirImagens(qntBananas, qntBrocolis, qntCenouras, qntMacas);
+            }
+        }
+    }
+
+    // Limpa o HTML interno do identificador
+    function limpar(identificador) {
+        identificador.innerHTML = '';
+    }
+
+    // Modifica cor e texto de um identificador
+    function alertar(identificador, texto, cor) {
+        mostrar(identificador);
+        identificador.style.color = cor;
+        identificador.innerHTML = texto;
+    }
+
+    // Exibe subtotal através de parâmetros de dinheiro e peso recebidos
+    function exibirSubtotal(dinheiro, peso) {
+        mostrar(msg);
+        msg_val_total.innerHTML = dinheiro.toFixed(2);
+        msg_peso_total.innerHTML = peso.toFixed(2);
+    }
+
+    // Adicionar imagens de acordo com a quantidade informada
+    function addImagem(imagem, quantidade) {
+        var contador = 0;
+        while (contador < quantidade) {
+            imagens.innerHTML += `<img src='${imagem}' width='50px'/>`;
+            contador++;
+        }
+    }
+
+    // Exibe imagens de acordo com parâmetros de quantidade
+    function exibirImagens(qntBananas, qntBrocolis, qntCenouras, qntMacas) {
+        mostrar(imagens);
+        limpar(imagens);
+        addImagem('banana.png', qntBananas);
+        addImagem('broccoli.png', qntBrocolis);
+        addImagem('carrot.png', qntCenouras);
+        addImagem('apple.png', qntMacas);
+    }
+
+    // Exibir tag identificada
+    function mostrar(identificador) {
+        identificador.style.display = 'block';
+    }
+
+    // Esconder tag identificada
+    function esconder(identificador) {
+        identificador.style.display = 'none';
+    }
+
+</script>

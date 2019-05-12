@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <form>
+        Sabor: <input type="text" id='sabor'/><br/>
+        <br/> Faixa salarial p/ INSS:
+        <select name="Faixa" id="faixa">
+            <option value="0">Faixa 1: 0 a 1000</option>
+            <option value="10">Faixa 2: 1000 a 3000</option>
+            <option value="20">Faixa 3: Mais de 3000</option>
+        </select>
+        <button type="button" onclick='exibir()'>Calcular Desconto</button>
+        <div id="msg"></div>
+    </form>
+
+</body>
+
+</html>

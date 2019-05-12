@@ -1,0 +1,49 @@
+<!-- 
+    Um grupo de pessoas, auto-entitulado Equipe Idão, quer aprender a sobre câmbio (conversão de valores entre moedas diferentes). Ajude eles criando um programa com os campos: "Valor em R$", "Cotação do dólar, em R$" e  um botão abaixo desses campos "Converter e avaliar".
+    Ao clicar no botão, vão aparecer duas frases abaixo dele. A primeira será:
+    R$X, na cotação atual dá U$Y
+
+    A segunda frase pode ser uma dessas duas:
+    Você tem muitos dólares! (caso a conversão tenha dado mais de U$1000,99)
+    Você tem poucos dólares! (caso a conversão tenha dado até U$1000,99)
+ -->
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Exercício 5</title>
+</head>
+
+<body>
+
+    <form>
+        Valor em R$: <input type="number" id='in_valor'><br>
+        Cotação do dólar, em R$: <input type="number" id='in_cotacao'><br>
+        <button type="button" onclick='validar()'>Converter e avaliar</button>
+    </form>
+    <div id="msg"></div>
+
+</body>
+
+</html>
+
+<script>
+    function validar() {
+        var valor = Number(in_valor.value)
+        var cotacao = Number(in_cotacao.value)
+
+        var conversao = valor / cotacao
+
+        var frase = `R$${valor}, na cotação atual dá U$${conversao}`
+
+        if (conversao > 1000.99)
+            frase = `${frase} <br/> Você tem muitos dólares!`
+        else
+            frase = `${frase} <br/> Você tem poucos dólares!`
+        msg.innerHTML = frase
+    }
+</script>

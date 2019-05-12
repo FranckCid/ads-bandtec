@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang='pt-br'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Questão 3</title>
+</head>
+
+<body>
+    <form>
+        Digite o seu salário bruto: <input type='number' id='bruto'><br />
+        Digite o valor total dos descontos no salário: <input type='number' id='descontos'><br />
+        Multa de trânsito:<br />
+        <select name='multa' id='multa'>
+            <option value='0'>Nenhuma</option>
+            <option value='50'>Leve (R$ 50,00)</option>
+            <option value='100'>Média (R$ 100,00)</option>
+            <option value='200'>Grave (R$ 200,00)</option>
+            <option value='350'>Gravíssima (R$ 350,00)</option>
+        </select>
+
+        <button type='button' onclick='calcular()'>Calcular custo mensal</button>
+        <br />
+
+        <div id='msg' style='color: green; display: none'>
+            O Walmir ganha R$<span id="salBrutoSpan"></span> e sobra R$<span id="sobraSpan"></span>. Ou seja, ele gasta
+            <span id='porcentagemSpan'></span>% de seu salário.
+        </div>
+
+    </form>
+</body>
+
+</html>
+<script>
+    function calcular() {
+        // Recebe e converte o valor das tags input
+        var salBruto = Number(bruto.value);
+        var descontar = Number(descontos.value);
+        var valMulta = Number(multa.value);
+
+        // Calcula quanto sobra do salário e a porcentagem
+        var sobra = salBruto - (descontar + valMulta);
+        var porcentagem = 100 * sobra / salBruto;
+
+        // Edita HTML das tags e passa o valor das variaveis acima
+        salBrutoSpan.innerHTML = salBruto;
+        sobraSpan.innerHTML = sobra;
+        porcentagemSpan.innerHTML = porcentagem.toFixed(2);
+
+        // Exibe mensagem
+        msg.style.display = 'inline';
+    }
+</script>

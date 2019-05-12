@@ -1,0 +1,35 @@
+<!-- Crie um programa que leia as notas de um aluno. A nota continuada e a nota da integrada. Caso a média aritmética entre elas for a partir de 5, exiba na cor verde a frase "#partiuestágio". Caso contrário, exiba na cor roxa a frase "#tenteoutravez" -->
+
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Exercício 4</title>
+</head>
+<body>
+    <form>
+        <p>Passou?</p>
+        Nota continuada: <input type="number" id='nota_con'><br>
+        Nota integrada: <input type="number" id='nota_int'><br>
+        <button type="button" onclick='validar()'>Verificar</button>
+    </form>
+    <div id="msg"></div>
+</body>
+</html>
+
+<script>
+    function validar(){
+        var notaCon = Number(nota_con.value)
+        var notaInt = Number(nota_int.value)
+        var media = (notaCon + notaInt) / 2
+        if(media >= 5){
+            msg.innerHTML = '#partiuestagio'
+            msg.style.color = 'green'
+        }else{
+            msg.innerHTML = '#tenteoutravez'
+            msg.style.color = 'purple'
+        }
+    }
+</script>

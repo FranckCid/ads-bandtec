@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <form>
+        Nome:
+        <input type="text" name="nome" id="nome">
+        <br/>
+        <select name='frase' id='frase'>
+            <option value='valorize menos processos e ferramentas e mais indivíduos e interações'>Processos e ferramentas</option>
+            <option value='valorize menos documentação abrangente e mais software em funcionamento'>Documentação abrangente</option>
+            <option value='valorize menos negociação de contratos e mais colaboração com o cliente'>Negociação de contratos</option>
+            <option value='valorize menos seguir um plano e mais responder a mudanças'>Seguir um plano</option>
+        </select>
+        <button type='button' onclick='revelar()'>#partiuagilidade</button>
+        <span style='margin-top: 25px' id='msg'></span>
+    </form>
+</body>
+
+</html>
+<script>
+    function revelar() {
+        msg.innerHTML = `Então, ${nome.value}, ${frase.value}.`;
+    }
+</script>

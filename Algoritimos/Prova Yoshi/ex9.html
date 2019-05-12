@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    Nome:
+    <input type="text" name="nome" id="nome">
+    <br/>
+    Nota 1:
+    <input type="text" name="nota1" id="nota1">
+    <br/>
+    Nota 2:
+    <input type="text" name="nota2" id="nota2">
+    <br/> 
+    Nota 3:
+    <input type="text" name="nota3" id="nota3">
+    <br/>
+    <button type='button' onclick='revelar()'>Calcular nota p/ passar</button>
+    <span style='color: red' id='msg'></span>
+    </form>
+</body>
+
+</html>
+
+<script>
+    function revelar() {
+        var n1 = Number(nota1.value)
+        var n2 = Number(nota2.value)
+        var n3 = Number(nota3.value)
+        var nota = (5-(((n1 + n2 + n3) / 3) * .4))/.6
+        msg.innerHTML = `Olá, ${nome.value}. Para passar você precisa tirar ${nota.toFixed(2)} na integrada`
+    }
+</script>

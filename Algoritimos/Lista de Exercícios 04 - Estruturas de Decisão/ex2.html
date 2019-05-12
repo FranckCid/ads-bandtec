@@ -1,0 +1,32 @@
+<!-- Crie um programa que leia a renda familiar de uma família a partir do salário do pai e da mãe (ou seja, 2 entradas). Ao clicar num botão "Verificar Bolsa Família", ele exibe "Você tem direito ao Bolsa Família" caso a renda familiar for menor que 250,70 ou "Nada de Bolsa Família" caso contrário. -->
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Exercício 2</title>
+</head>
+<body>
+    <form>
+        <p>Renda familiar:</p>
+        Pai: <input type="text" id='r_pai'><br>
+        Mãe: <input type="text" id='r_mae'><br>
+        <button type="button" onclick='validar()'>Verificar bolsa família</button>
+    </form>
+    <div id="msg"></div>
+</body>
+</html>
+
+<script>
+    function validar(){
+        var rendaPai = Number(r_pai.value)
+        var rendaMae = Number(r_mae.value)
+        var renda = (rendaPai + rendaMae)
+        if(renda < 250.70){
+            msg.innerHTML = 'Você tem direito ao Bolsa Família'
+        }else{
+            msg.innerHTML = 'Nada de bolsa família'
+        }
+    }
+</script>

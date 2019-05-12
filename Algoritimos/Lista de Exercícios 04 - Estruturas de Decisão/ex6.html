@@ -1,0 +1,46 @@
+<!-- Um sociólogo precisa cadastrar família pobres para seu estudo. Ajude ele criando um programa com os campos: "Renda do pai", "Renda da mãe" e "Renda dos avós" e um botão abaixo desses campos "Verificar situação social".
+Ao clicar no botão, vai aparecer uma frase abaixo dele, que pode ser uma dessas 2:
+Abaixo da linha de pobreza! (caso a renda familia for menos de 150,55)
+Acima da linha de pobreza! (caso a renda familia for a partir de 150,55)
+* Considere que renda familiar é a soma das 3 rendas do programa.
+ -->
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Exercício 5</title>
+</head>
+
+<body>
+
+    <form>
+        Renda do pai: <input type="number" id='rend_pai'><br>
+        Renda da mãe: <input type="number" id='rend_mae'><br>
+        Renda dos avós: <input type="number" id='rend_avos'><br>
+        <button type="button" onclick='validar()'>Validar</button>
+    </form>
+    <div id="msg"></div>
+
+</body>
+
+</html>
+
+<script>
+    function validar() {
+        var rendPai = Number(rend_pai.value)
+        var rendMae = Number(rend_mae.value)
+        var rendAvos = Number(rend_avos.value)
+        var renda = rendAvos + rendMae + rendAvos
+        var frase
+
+        if (renda < 150.55)
+            frase = 'Abaixo da linha de pobreza!'
+        else
+            frase = 'Acima da linha de pobreza!'
+        msg.innerHTML = frase
+    }
+</script>

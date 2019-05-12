@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Desafio 01</title>
+</head>
+<body>
+    <form>
+        <input type="number" id="salario">
+        <button type="button" onclick='verificar()'>Ver situação</button>
+    </form>
+    <div id="msg"></div>
+</body>
+</html>
+<script>
+    function verificar(){
+        msg.innerHTML = Number(salario.value) < 200 ? 'Bem pobre' : Number(salario.value) >= 200 && Number(salario.value) <= 1200 ? 'Pobre' : Number(salario.value) > 1200 && Number(salario.value) <= 2000 ? 'Nem tão pobre' : 'Classe média ou rico'
+    }
+</script>

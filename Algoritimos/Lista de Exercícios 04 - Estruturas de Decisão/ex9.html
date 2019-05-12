@@ -1,0 +1,80 @@
+<!-- 
+    Crie um programa que ajude a calcular a média final de um aluno Bandtec. A tela deve conter:
+    Um campo 'Nome do aluno'
+
+    Um campo 'Média das continuadas'
+
+    Um campo 'Nota da integrada'
+
+    Um botão 'Verificar Resultado'
+
+    Ao clicar no botão, deve aparecer na tela uma destas frases:
+    Parabéns, NOME, você foi aprovado com média final X. (frase na cor azul)
+    Olá, NOME, infelizmente você foi reprovado com média final X. (frase na cor vermelha)
+    X deve ser exibido sempre com 2 casas decimais.
+    X é a soma entre 20% da média das continuadas e 80% da nota da integrada. Para a aprovação, a média final (X) deve ser maior ou igual a 5.
+
+    Abaixo da frase, deve aparecer a foto de uma pessoa feliz, em caso de aprovação. Ou de uma pessoa triste, em caso de reprovação.
+
+    #FICADICA: Para fazer uma imagem aparecer, usamos a tag <img>, lembra? A imagem a ser exibida, pode estar na mesma pasta do arquivo .html ou na internet, bastando indicar seu nome ou endereço no atributo src da tag <img>. Logo, para mudar a imagem de uma tag <img>, basta:
+
+    a) Dar um identificador para a <img> 
+
+    b) Para alterar sua imagem, basta alterar seu src. Ex: para alterar a imagem de <img id='foto_pessoa'>, fazemos: foto_pessoa.src = 'alegre.jpg'. 
+
+    c) Para fazer a imagem 'sumir' basta alterar seu style.display para 'none' (Ex: foto_pessoa.style.display = 'none') OU deixar seu src vazio (Ex: foto_pessoa.src = '')
+
+ -->
+
+<!DOCTYPE html>
+<html lang='pt-br'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Exercício 9</title>
+</head>
+
+<body>
+
+    <form>
+        Nome do aluno <input type='text' id='nome_aluno'><br>
+        Média das continuadas <input type='number' id='continuadas'><br>
+        Média da integrada <input type='number' id='integradas'><br>
+        <button type='button' onclick='validar()'>Verificar Resultado</button>
+    </form>
+    <div id='msg'></div>
+    <img src='' alt='emocao' id='emocao' style='display: none'>
+
+</body>
+
+</html>
+
+<script>
+    function validar() {       
+
+        var nome = nome_aluno.value
+        var cont = continuadas.value
+        var integ = integradas.value
+        var mediaFinal = cont * .2 + integ * .8
+        var frase
+        var cor
+        var imagem
+
+        if(mediaFinal >= 5){
+            frase = `Parabéns, ${nome}, você foi aprovado com média final ${mediaFinal.toFixed(2)}`
+            cor = 'blue'
+            imagem = 'feliz.jpg'
+        }else{
+            frase = `Olá, ${nome}, infelizmente você foi reprovado com média final ${mediaFinal.toFixed(2)}`
+            cor = 'red'
+            imagem = 'triste.jpg'
+        }
+
+        msg.innerHTML = frase
+        msg.style.color = cor
+        emocao.style.display = 'block'
+        emocao.src = imagem
+    }
+</script>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang='pt-br'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Questão 2</title>
+</head>
+<body>
+    <form>
+        Digite uma frase: <input type='text' placeholder='Sua frase aqui' id='frase'><br/>
+        <input type='text' style='color: #003f00' id='t1'>
+        <input type='text' style='color: #008000' id='t2'>
+        <input type='text' style='color: #07d407' id='t3'><br/>
+        <button type='button' onclick='selecionar_1()'>Ver no 1º tom</button>
+        <button type='button' onclick='selecionar_2()'>Ver no 2º tom</button>
+        <button type='button' onclick='selecionar_3 ()'>Ver no 3º tom</button>
+    </form>
+</body>
+</html>
+<script>
+    function selecionar_1(){
+        t1.value = frase.value;
+    }
+    function selecionar_2(){
+        t2.value = frase.value;
+    }
+    function selecionar_3(){
+        t3.value = frase.value;
+    }
+</script>

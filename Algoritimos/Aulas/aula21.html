@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Aula 21</title>
+</head>
+
+<body>
+    <form>
+        Temperatura, em ºC:
+        <input type="number" id='temperatura' autofocus>
+        <br><br>
+        <button type="button" onclick='analisar()'> Analisar clima </button>
+        <div id="msg"></div>
+    </form>
+</body>
+
+</html>
+
+<script>
+    function analisar() {
+        var temp = temperatura.value
+        var frase
+        if (temp < 20){
+            frase = 'Frio desconfortável S:'
+        }else if (temp > 28){
+            frase = 'Calor desconfortável :('
+        }else{
+            frase = 'Temperatura suportável :)'
+        }
+        msg.innerHTML = frase
+    }
+</script>

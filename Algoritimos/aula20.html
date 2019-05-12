@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Aula 20</title>
+</head>
+
+<body>
+    <form>
+        Sua idade:
+        <input type="number" id="idade">
+        <br>
+        <button type="button" onclick='votacao()'>Verificar votação</button>
+    </form>
+    <div id="msg"></div>
+</body>
+
+</html>
+<script>
+    function votacao() {
+        var idadeUsuario = Number(idade.value)
+        if (idadeUsuario >= 16) {
+            msg.innerHTML = 'Você já pode votar! :)'
+        }else{
+            msg.innerHTML = 'Você NÃO pode votar! :('
+        }
+    }
+</script>

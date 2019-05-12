@@ -1,0 +1,31 @@
+<!-- Crie um programa que leia a idade do usuário. Caso ele tenha 18 anos ou mais, exiba "Já pode entrar na balada". Caso contrário, exiba "#jogarplaystation". Isso tudo deve ocorrer após clicar num botão "Testar acesso". -->
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ex. 1</title>
+</head>
+
+<body>
+    <form>
+        Idade: <input type="number" id="idade">
+        <button type="button" onclick="verificar()">Verificar</button>
+        <div id="msg"></div>
+    </form>
+</body>
+
+</html>
+<script>
+    function verificar() {
+        var alerta;
+        if(idade.value >= 18)
+            alerta = 'Já pode entrar na balada'
+        else
+            alerta = '#jgoarplaystation'
+        msg.innerHTML = alerta;
+    }
+</script>

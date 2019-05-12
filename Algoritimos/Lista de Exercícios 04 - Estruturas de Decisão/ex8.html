@@ -1,0 +1,49 @@
+<!-- 
+    Crie um programa que tenha dois campos: "O quanto você gosta de Frutas?" e "O quanto você gosta de Fastfood?". Ambos devem receber somente números.
+    Abaixo deles, deve haver um botão "Avaliar sua preferência".
+    Ao clicar no botão, vai aparecer uma frase abaixo dele, que pode ser uma dessas 3:
+    Você gosta tanto de frutas quanto de fastfood (caso o valor nos 2 campos seja o mesmo)
+    Você gosta mais de frutas (caso o valor do primeiro campo seja maior)
+    Você gosta mais de fastfood (caso o valor do segundo campo seja maior)
+ -->
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Exercício 5</title>
+</head>
+
+<body>
+
+    <form>
+        O quanto você gosta de Frutas? <input type="number" id='frutas'><br>
+        O quanto você gosta de Fastfood? <input type="number" id='fastfood'><br>
+        <button type="button" onclick='validar()'>Avaliar sua preferência</button>
+    </form>
+    <div id="msg"></div>
+
+</body>
+
+</html>
+
+<script>
+    function validar() {       
+
+        var num_frutas = frutas.value
+        var num_fastfood = fastfood.value
+        var frase
+
+        if(num_frutas > num_fastfood)
+            frase = 'Você gosta mais de frutas'
+        if(num_frutas < num_fastfood)
+            frase = 'Você gosta mais de fastfood'
+        if(num_frutas == num_fastfood)
+            frase = 'Você gosta tanto de frutas quanto de fastfood'
+
+        msg.innerHTML = frase
+    }
+</script>
