@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Fonte Roboto -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700" rel="stylesheet">
+
+    <title>Gerenciamento de Remédios</title>
+</head>
+
+<body>
+    <section class="box w-50 centered m-5">
+        <header class="box-header">
+            <!-- <img class='box-icon' src="" alt="icone de medicina"> -->
+            <h1 class='box-title'>Gerenciamento de Remédios</h1>
+        </header>
+        <main class="box-content">
+
+            <section class="med-add">
+                <form class="med-form">
+                    <div class="container p-2">
+                        <div class="col-5">
+                            <img src="img/medicine.png" alt="adicionar medicina" class='w-75'>
+                        </div>
+
+                        <div class="col-1">
+                            <div class="container">
+                                <div class="form-control">
+                                    <label for="name">Nome do medicamento:</label>
+                                    <input type="text" id='name' required>
+                                </div>
+                            </div>
+                            <div class="container">
+                                <div class="form-control">
+                                    <label for="name">De:</label>
+                                    <input type="date" id='from' required>
+                                </div>
+                                <div class="form-control">
+                                    <label for="name">Até:</label>
+                                    <input type="date" id='to' required>
+                                </div>
+                            </div>
+                            <div class="container">
+                                <div class="form-control">
+                                    <label for="hour">Horário:</label>
+                                    <input type="time" id='hour' required>
+                                </div>
+                            </div>
+                            <div class="container">
+                                <button type="button" class='btn btn-primary w-100' onclick='add()'>
+                                    Adicionar
+                                </button>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </form>
+                
+            <div id="error-message" class="error-message"></div>
+            </section>
+            <main id="med-parent"></main>
+        </main>
+    </section>
+</body>
+
+</html>
+
+<script>
+
+    function Medicine({ name, from, to, hour }) {
+        return `
+            <article class="med container">
+                <header class="med-figure">
+                    <img src="img/pills.png" alt="pílula" class='w-100'>
+                </header>
+                <main class='med-content'>
+                    <h1 class='med-title'>${name}</h1>
+                    <div class="med-desc">
+                        <div class="med-days_week">
+                            <div class="day-uncheck">s</div>
+                            <div class="day-uncheck">t</div>
+                            <div class="day-check">q</div>
+                            <div class="day-uncheck">q</div>
+                            <div class="day-uncheck">s</div>
+                            <div class="day-check">s</div>
+                            <div class="day-uncheck">d</div>
+                        </div>
+                        <div class="med-date">
+                            ${from} • ${to}
+                        </div>
+                        <span class="med-hours">
+                            ${hour}
+                        </span>
+                        <!-- <ul class='med-hours-list'>
+                            <li class='med-hours-item'>12:30</li>
+                            <li class='med-hours-item'>12:30</li>
+                            <li class='med-hours-item'>12:30</li>
+                            <li class='med-hours-item'>12:30</li>
+                            <li class='med-hours-item'>12:30</li>
+                            <li class='med-hours-item'>12:30</li>
+                        </ul> -->
+                    </div>
+                </main>
+            </article>
+        `
+    }
+
+    const medicines = []
+
+    function validate(type, fields) {
+        var valid = true
+        if (type == 'empty') {
+            fields.forEach(f => {
+                if (f == '')
+                    valid = false
+            })
+        }
+
+        return valid
+    }
+
+    function add() {
+        const name = document.getElementById('name').value
+        const from = document.getElementById('from').value
+        const to = document.getElementById('to').value
+        const hour = document.getElementById('hour').value
+
+        const getMed = {
+            name,
+            from,
+            to,
+            hour,
+        }
+
+        const validation = validate('empty', Object.values(getMed))
+
+        if (validation){
+            medicines.push(getMed)
+            list();
+        }else{
+            error('Não deixe campos em branco.')
+        }
+
+    }
+
+    function error(msg){        
+        const message = document.getElementById('error-message')
+        message.innerHTML = `${msg}`
+    }
+
+    function list() {
+        const medParent = document.getElementById('med-parent')
+        medParent.innerHTML = ''
+        medicines.reverse().forEach(m => medParent.innerHTML += Medicine(m))
+    }
+</script>

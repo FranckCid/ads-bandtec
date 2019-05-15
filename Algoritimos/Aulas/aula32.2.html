@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Aula 32</title>
+</head>
+
+<body>
+    Lugares que vc já viajou:
+    <input type="text" id="lugar">
+    <br>
+    <button onclick='cadastrar()'>Cadastrar</button>
+    <br>
+    <div id="msg"></div>
+</body>
+
+</html>
+<script>
+
+    var projetos = []
+
+    function cadastrar() {
+        projetos.push(lugar.value)
+
+        var nivel = ''
+
+        if (projetos.length >= 13) {
+            nivel = `Sênior desde o projeto ${projetos[12]}`
+        } else if (projetos.length >= 5) {
+            nivel = `Pleno desde o projeto ${projetos[4]}`
+        }else{
+            nivel = `Júnior`
+        }
+
+        msg.innerHTML = `Você já fez ${projetos.length} projetos. Por isso você é um profissional ${nivel}.`
+
+    }
+</script>

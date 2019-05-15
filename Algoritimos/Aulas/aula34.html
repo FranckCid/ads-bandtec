@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Aula 33</title>
+</head>
+
+<body>
+    Filme que você gosta:
+    <input type="text" id="filme">
+    <button onclick='cadastrar()'>Cadastrar</button>
+    <br>
+    <input type="text" id="pesquisa">
+    <button onclick='pesquisar()'>Pesquisar</button>
+    <div id="msg"></div>
+</body>
+
+</html>
+<script>
+
+    var filmes = []
+
+    function cadastrar() {
+        filmes.push(filme.value)
+        favoritos()
+    }
+
+    function favoritos() {
+        var formatado = ''
+        msg.innerHTML = 'Cadastrado!'
+
+        for (var i = 0; i < filmes.length; i++) {
+            formatado += `<br/>${filmes[i]}`
+        }
+        msg.innerHTML = `
+            Filmes: ${formatado}<br/> Valor Total: ${filmes.length} <br/>
+            O que mais gosta é: ${filmes[0]}<br/>
+            E desses, o que menos gosta é: ${filmes[filmes.length - 1]}<br/>
+        `
+    }
+
+    function pesquisar() {
+        var indice_achado = 0
+        for (var i = 0; i < filmes.length; i++) {
+            if(pesquisa.value == filmes[i])
+                indice_achado = i
+        }
+
+        if(indice_achado > 0){
+            msg.innerHTML = `${filmes[indice_achado]}`
+        }else{
+            msg.innerHTML = `Não encontrado`
+        }
+    }
+</script>

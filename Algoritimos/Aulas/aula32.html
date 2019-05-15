@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Aula 32</title>
+</head>
+
+<body>
+    Filme que você gosta:
+    <input type="text" id="filme">
+    <br>
+    <button onclick='cadastrar()'>Cadastrar</button>
+    <button onclick='favoritos()'>Ver favoritos</button>
+    <div id="msg"></div>
+</body>
+
+</html>
+<script>
+
+    var filmes = []
+
+    function cadastrar() {
+        filmes.push(filme.value)
+        msg.innerHTML = 'Cadastrado!'
+    }
+
+    function favoritos() {
+        // msg.innerHTML = ''
+        // for (var i = 0; i < filmes.length; i++) {
+        //     msg.innerHTML += `${filmes[i]}<br/>`
+        // }
+        msg.innerHTML = `
+            Filmes: ${filmes}<br/> Valor Total: ${filmes.length}
+            O que mais gosta é: ${filmes[0]}<br/>
+            E desses, o que menos gosta é: ${filmes[filmes.length-1]}<br/>
+        `
+
+    }
+</script>

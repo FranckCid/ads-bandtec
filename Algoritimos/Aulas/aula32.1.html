@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Aula 32</title>
+</head>
+
+<body>
+    Lugares que vc já viajou:
+    <input type="text" id="lugar">
+    <br>
+    <button onclick='cadastrar()'>Cadastrar</button>
+    <br>
+    Pesquisa por id:
+    <input type="text" id="pesquisa">
+    <br>
+    <button onclick='pesquisar()'>Pesquisar</button>
+    <div id="msg"></div>
+</body>
+
+</html>
+<script>
+
+    var lugares = []
+
+    function cadastrar() {
+        lugares.push(lugar.value)
+        msg.innerHTML = 'Cadastrado!'
+    }
+
+    function pesquisar() {
+        // msg.innerHTML = ''
+        // for (var i = 0; i < lugares.length; i++) {
+        //     msg.innerHTML += `${lugares[i]}<br/>`
+        // }
+        var l = lugares[pesquisa.value - 1];
+        var mensagem = l ? l : 'Você não fez esta viagem!'
+        msg.innerHTML = `
+            Lugar: ${mensagem}
+        `
+
+    }
+</script>
