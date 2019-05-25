@@ -1,0 +1,375 @@
+create database ExercicioAula12;
+use ExercicioAula12;
+
+-- Criação da tabela Funcionario
+-- Criei aqui as colunas que são chave estrangeiras (codSupervisor e codDepto)
+-- Mas não especifiquei aqui que elas são chave estrangeiras
+create table Funcionario (
+     idFunc int primary key,
+     nomeFunc varchar(30),
+     salario decimal(10,2),
+     sexo enum('m','f'),
+     idSupervisor int,
+     dataNasc date,
+     fkDepto int
+ ); 
+ 
+-- Criação da tabela Departamento
+-- Aqui tudo bem já especificar que idGerente é chave estrangeira,
+-- porque a tabela Funcionario já existe
+create table Departamento (
+     idDepto int primary key,
+     nomeDepto varchar(30),
+     idGerente int,
+     dataInicioGer date,
+     foreign key(idGerente) references Funcionario(idFunc)
+);
+
+-- Criação da tabela Projeto
+create table Projeto (
+     idProj int primary key,
+     nomeProj varchar(30),
+     localProj varchar(15),
+     fkDepto int,
+     foreign key(fkDepto) references Departamento(idDepto)
+);
+
+-- Criação da tabela FuncProj
+create table FuncProj (
+     fkFunc int,
+     fkProj int,
+     horas decimal(3,1),
+     foreign key(fkFunc) references Funcionario(idFunc),
+     foreign key(fkProj) references Projeto(idProj),
+     primary key(fkFunc,fkProj)      -- chave primária composta
+ ); 
+
+-- Insere dados na tabela Funcionario, de acordo com o enunciado 
+insert into Funcionario values
+   (1,'Joao Silva',3500,'m',2,'1985-01-09',105),
+   (2,'Fernando Wong',4500,'m',8,'1975-12-08',105),
+   (3,'Alice Sousa',2500,'f',7,'1988-01-19',104),
+   (4,'Janice Morais',4300,'f',8,'1970-06-20',104),
+   (5,'Ronaldo Lima',3800,'m',1,'1982-09-15',105),
+   (6,'Joice Leite',2500,'f',1,'1992-07-31',105),
+   (7,'Antonio Pereira',2500,'m',4,'1989-03-29',104),
+   (8,'Juliano Brito',1500,'m',NULL,'1957-11-10',101);
+   
+-- Visualiza os dados da tabela Funcionario   
+select * from Funcionario;
+
+-- Insere dados da tabela Departamento, de acordo com o enunciado   
+insert into Departamento values
+   (105,'Pesquisa',2,'2008-05-22'),
+   (104,'Administração',7,'2015-01-01'),
+   (101,'Matriz',8,'2001-06-19');
+   
+-- Visualiza os dados da tabela Departamento   
+select * from Departamento;
+
+-- Altera a tabela Funcionario, para que as colunas codSupervisor e codDepto
+-- sejam chave estrangeira
+alter table Funcionario 
+   add foreign key(fkDepto) references Departamento(idDepto),
+   add foreign key(idSupervisor) references Funcionario(idFunc);
+
+-- Insere dados na tabela Projeto, de acordo com o enunciado
+insert into Projeto values 
+   (1,'Produto X','Santo André',105),
+   (2,'Produto Y','Itu',105),
+   (3,'Produto Z','São Paulo',105),
+   (10,'Informatização','Mauá',104),
+   (20,'Reorganização','São Paulo',101),
+   (30,'Benefícios','Mauá',104);
+
+-- Insere dados na tabela FuncProj
+insert into FuncProj values
+    (1, 1, 32.5), (1, 2, 7.5),
+    (5, 3, 40), (6, 1, 20),
+    (6, 2, 20), (2, 2, 10),
+    (2, 3, 10), (2, 10, 10),
+    (2, 20, 10), (3, 30, 30),
+    (3, 10, 10), (7, 10, 35),
+    (7, 30, 5), (4, 30, 20),
+    (4, 20, 15), (8, 20, NULL);
+    
+-- Visualiza dados da tabela Projeto    
+select * from Projeto;
+
+-- Visualiza dados da tabela TrabalhaEm
+select * from FuncProj;
+
+-- Inserção de mais um funcionário, de acordo com o enunciado
+insert into Funcionario values
+	(null,'Cecília Ribeiro','2800','f',null,'1980-04-05',104);
+-- o insert acima dá erro pq o idFunc não pode ser null, pois é uma chave primária    
+
+-- Inserção de mais um funcionário, de acordo com o enunciado
+insert into Funcionario values
+	(3,'Alice Sousa','2800','f',4,'1980-04-05',104);
+-- o insert acima dá erro pq o idFunc 3 já existe, e é chave primária
+
+-- Inserção de mais um funcionário, de acordo com o enunciado
+insert into Funcionario values
+	(9,'Cecília Ribeiro','2800','f',4,'1980-04-05',107);  
+-- o insert acima dá erro pq o idDepto 107 não existe na tabela Departamento
+
+-- Inserção de mais um funcionário, de acordo com o enunciado
+insert into Funcionario values
+	(9,'Cecília Ribeiro','2800','f',4,'1980-04-05',104);
+-- o insert acima funcionou pq os dados estão consistentes
+
+-- Exclusão de um registro da tabela TrabalhaEm
+delete from FuncProj where fkFunc=3 and fkProj=10;
+-- a exclusão acima funcionou pq os dados estão consistentes
+-- e não há outro registro em nenhuma tabela que dependa deste registro    
+
+-- Exclusão de um funcionário
+delete from Funcionario where idFunc = 3;
+-- a exclusão acima não funciona pq existem outros registros que 
+-- dependem dele (o funcionário 3 aparece como supervisor de outro
+-- e tb aparece na tabela FuncProj)
+
+-- Exclusão de um funcionário
+delete from Funcionario where idFunc = 2;
+-- a exclusão acima não funciona pq existem outros registros que 
+-- dependem dele (o funcionário 2 aparece como supervisor de outro
+-- e tb aparece nas tabelas Departamento e FuncProj)
+
+-- Atualização do salário de um funcionário
+update Funcionario set salario=2800 where idFunc = 3;
+-- a atualização acima funciona pq os dados estão corretos
+
+-- Atualização do codDepto de um funcionário
+update Funcionario set fkDepto=101 where idFunc = 3;
+-- a atualização acima funciona pq os dados estão corretos
+
+-- Atualização do codDepto de um funcionário
+update Funcionario set fkDepto=107 where idFunc = 3;
+-- a atualização acima não funciona pq o departamento 107 não existe
+
+-- Exibir a data de nascimento e o salário do funcionário Joao Silva
+select dataNasc, salario from Funcionario where nomeFunc='Joao Silva';
+
+-- Exibir apenas o salário de todos os funcionários
+select salario from Funcionario;
+
+-- Exibir apenas os salários distintos (sem repetir salários iguais) dos funcionários
+select distinct salario from Funcionario;
+
+-- Exibir os dados dos funcionários ordenados pelo nome
+select * from Funcionario order by nomeFunc;
+
+-- Exibir os dados dos funcionários ordenados pelo salário de forma decrescente
+select * from Funcionario order by salario desc;
+
+-- Exibir os dados dos funcionários que tenham salário entre 2000 e 4000
+select * from Funcionario where salario >= 2000 and salario <= 4000;
+
+-- Outra forma de exibir os dados dos funcionários com salário entre 2000 e 4000
+select * from Funcionario where salario between 2000 and 4000;
+
+-- Exibir os nomes e os salários dos funcionários cujos nomes começam com a letra 'J' 
+select nomeFunc,salario from Funcionario where nomeFunc like 'J%';
+
+-- Exibir os nomes e os salários dos funcionários cujos nomes terminem com a letra 'a'
+select nomeFunc,salario from Funcionario where nomeFunc like '%a';
+
+-- Exibir os nomes dos funcionários que tem a letra 'n' como terceira letra do nome
+select nomeFunc from Funcionario where nomeFunc like '__n%';
+
+-- Exibir os nomes e as datas de nascimento dos funcionários cujos nomes tenham
+-- a letra 'S' como 5a letra de trás para frente
+select nomeFunc,dataNasc from Funcionario where nomeFunc like '%S____';
+
+-- Exibir os dados dos funcionários que trabalham no departamento Pesquisa
+-- 1a forma de fazer - quando eu sei que o codDepto do departamento Pesquisa é 105
+select * from Funcionario where fkDepto = 105;
+
+-- Exibir os dados dos funcionários que trabalham no departamento Pesquisa
+-- 2a forma de fazer - quando eu não sei que o codDepto do departamento Pesquisa é 105
+
+-- -- Exibindo os dados de todos funcionários e de seus respectivos departamentos
+select * from Funcionario, Departamento
+    where fkDepto = idDepto;
+-- -- Exibindo os dados de todos funcionários e de seus respectivos departamentos
+-- -- mas somente do departamento chamado Pesquisa    
+select * from Funcionario, Departamento
+    where fkDepto = idDepto and nomeDepto = 'Pesquisa';
+-- -- Exibindo os dados apenas dos funcionários do departamento chamado Pesquisa    
+select f.* from Funcionario as f, Departamento
+    where fkDepto = idDepto and nomeDepto = 'Pesquisa';
+
+-- Exibir os dados dos funcionários que trabalham no departamento Pesquisa
+-- 3a forma de fazer - quando eu não sei que o codDepto do departamento Pesquisa é 105
+
+-- -- Usando uma subconsulta, ou seja, uso um select para descobrir qual o codDepto
+-- -- do departamento chamado Pesquisa
+select * from Funcionario where fkDepto =
+      (select idDepto from Departamento where nomeDepto='Pesquisa'); 
+      
+-- Exibir os dados dos funcionários que trabalham no departamento Pesquisa e que
+-- tenham salário acima de 3500
+select * from Funcionario where fkDepto =
+      (select idDepto from Departamento where nomeDepto='Pesquisa')
+      and salario > 3500;
+
+-- Exibir os dados dos funcionários que trabalham no departamento Pesquisa e que
+-- tenham o nome com inicial 'J'
+select * from Funcionario where fkDepto =
+      (select idDepto from Departamento where nomeDepto='Pesquisa')
+      and nomeFunc like 'J%';   
+
+select * from Funcionario;     
+ 
+-- Exibir o idFunc e o nome de cada funcionário, juntamente com o idFunc e o nome
+-- do seu supervisor
+select f.idFunc as idFuncionario, f.nomeFunc as nomeFuncionario,
+       s.idFunc as idSupervisor, s.nomeFunc as nomeSupervisor
+        from Funcionario as f, Funcionario as s
+        where s.idFunc = f.idSupervisor;
+
+-- Exibir para cada projeto, o id do projeto, o número do departamento que o controla
+-- o nome e a data de nascimento do gerente do departamento
+select idProj, p.fkDepto, nomeFunc, dataNasc
+     from Projeto as p, Departamento, Funcionario 
+     where idDepto = p.fkDepto 
+       and idGerente = idFunc;
+       
+-- Exibir para cada projeto localizado em São Paulo, o idProj do projeto, o número
+-- do departamento que o controla, o nome e a data de nascimento do gerente do departamento
+select idProj, p.fkDepto, nomeFunc, dataNasc
+     from Projeto as p, Departamento, Funcionario 
+     where p.fkDepto = idDepto 
+       and idGerente = idFunc
+       and localProj = 'São Paulo';
+
+select * from Projeto;
+
+-- Exibir o idFunc e o nome do funcionário, o projeto e o nome do projeto em que trabalha
+-- e a quantidade de horas que trabalha nesse projeto
+select idFunc, nomeFunc, fkProj, nomeProj, horas
+     from FuncProj, Funcionario, Projeto
+     where fkFunc = idFunc
+      and  fkProj = idProj;
+
+-- Exibir os nomes dos funcionários que nasceram antes de 1980
+select nomeFunc from Funcionario where dataNasc < '1980';
+
+-- Aplique um resjuste de 10% nos salários dos funcionários que trabalham no 
+-- departamento Pesquisa
+update Funcionario set salario = salario * 1.10
+    where fkDepto = (select idDepto from Departamento
+                       where nomeDepto = 'Pesquisa');
+
+select * from Funcionario;
+
+-- Exibir a quantidade de salários diferentes que existem na empresa
+select count(distinct salario) as 'Quantidade Salarios Distintos'
+     from Funcionario;
+     
+-- Exibir a quantidade de locais diferentes de projeto     
+select count(distinct localProj) as 'Quantidade Locais Distintos'
+     from Projeto;
+     
+-- Exibir o salário médio da empresa e a soma dos salários
+select avg(salario) as MediaSalario, sum(salario) as TotalSalario
+     from Funcionario;
+     
+-- Exibir o menor e o maior salário da empresa
+select min(salario) as MenorSalario, max(salario) as MaiorSalario
+     from Funcionario;
+     
+-- Exibir o idDepto, o salário médio e a soma dos salários agrupados por departamento
+select fkDepto, avg(salario) as MediaSalario, sum(salario) as TotalSalario
+     from Funcionario group by fkDepto;
+     
+-- Exibir o idDepto, o menor e o maior salário de cada departamento
+select fkDepto, min(salario) as MenorSalario, 
+                max(salario) as MaiorSalario
+     from Funcionario group by fkDepto;
+     
+-- Inserção de 2 funcionários sem departamento associado
+insert into Funcionario values
+     (10,'José da Silva','1800','m',3,'2000-10-12',null),
+     (11,'Benedito de Almeida','1200','m',5,'2001-09-01',null);
+     
+-- Inserção de 1 departamento que não tem funcionário associado
+insert into Departamento values
+	 (110,'RH', 3, '2018-11-10');
+
+-- Exibição dos funcionários e de seus respectivos departamentos
+-- LEFT JOIN traz os funcionários sem departamento
+select * from Funcionario
+    left join Departamento on fkDepto = idDepto;
+    
+-- Exibição dos funcionários e de seus respectivos departamentos
+-- RIGHT JOIN traz os departamentos sem funcionário 
+select * from Funcionario
+    right join Departamento on fkDepto = idDepto;    
+
+
+
+-- ESSA PARTE NÃO TEM NO ENUNCIADO
+
+-- Exibir o id do departamento, a quantidade de funcionários e a
+-- soma de salários de cada departamento
+select fkDepto, count(*) as QuantidadeFuncionarios,
+       sum(salario) as TotalSalario
+       from Funcionario group by fkDepto;
+       
+-- Exibir o id do departamento, a quantidade de funcionários e a
+-- soma de salários de cada departamento que tenha mais de 2 funcionários
+select fkDepto, count(*) as QuantidadeFuncionarios,
+       sum(salario) as TotalSalario
+       from Funcionario 
+       group by fkDepto having count(*) > 2; 
+
+
+-- Exibir os dados de todos os funcionários e de seus departamentos correspondentes      
+select * from Funcionario, Departamento where fkDepto = idDepto;
+       
+-- Idem ao anterior, mas usando JOIN       
+select * from Funcionario inner join Departamento on fkDepto = idDepto;
+    
+-- Exibir os dados dos funcionários e de seus respectivos departamentos,
+-- mas somente dos funcionários que tem salário maior do que 3500    
+select * from Funcionario
+    inner join Departamento on fkDepto = idDepto
+    where salario > '3500';
+
+-- exibir o código do funcionario, o nome do funcionario
+-- o código e o nome do projeto, e as horas trabalhadas
+-- usando join    
+select idFunc, nomeFunc, fkProj, nomeProj, horas 
+   from Funcionario 
+    join FuncProj on fkFunc = idFunc 
+    join Projeto  on fkProj = idProj;
+
+
+-- Exibição dos funcionários e de seus respectivos departamentos
+-- INNER JOIN não traz os funcionários sem departamento e nem os departamentos sem funcionário 
+select * from Funcionario
+    inner join Departamento on fkDepto = idDepto;
+    
+
+-- Exibição dos departamentos e de seus respectivos funcionários
+-- RIGHT JOIN aqui traz os dados dos funcionários sem departamento
+select * from Departamento
+    right join Funcionario on fkDepto = idDepto;    
+
+-- Exibição dos funcionários e de seus respectivos departamentos
+-- traz os funcionários sem departamento e tb os departamentos sem funcionário 
+select * from Funcionario
+    left join Departamento on fkDepto = idDepto
+   union 
+ select * from Funcionario
+    right join Departamento on f.fkDepto = idDepto;    
+
+-- exibir a quantidade de mulheres da tabela Funcionario
+select count(sexo) as QuantidadeMulheres
+     from Funcionario where sexo = 'f';
+     
+     
+    
+

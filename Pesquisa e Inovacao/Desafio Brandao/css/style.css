@@ -1,18 +1,20 @@
 /* Animações */
 
 @keyframes turnaround {
-    from {transform: rotate(0)}
-    to {transform: rotate(360deg)}
-  }
+    0% {transform: rotate(0)}
+    25% {transform: rotate(-4deg)}
+    75% {transform: rotate(4deg)}
+    100% {transform: rotate(0)}
+}
 
 *{
     margin: 0;
     padding: 0;
     border: 0;
+    font-family: 'Roboto', sans-serif;
 }
 
 body{
-    font-family: 'Roboto', sans-serif;
     background: linear-gradient(to right, #e53935, #e35d5b);
 }
 
@@ -53,7 +55,7 @@ body{
     box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14);
     /* border: solid black 1px; */
   animation-name: turnaround;
-  animation-duration: 1s;
+  animation-duration: .5s;
 }
 
 .box-header{
@@ -105,18 +107,15 @@ body{
     color: #616161;
 }
 
-.day-uncheck, .day-check{
+.med-days-week{
     text-align: center;
-    border: #bdbdbd  solid 2px;
-    width: 20px;
-    height: 20px;
-    display: inline-block;
-    color: #bdbdbd;
+    margin-bottom: 6px;
 }
-
-.day-check{
-    background: #bdbdbd ;
-    color: white;
+.med-days-week th, .med-days-week input[type=checkbox]{
+    width: 20px !important;
+    text-transform: uppercase;
+    height: 20px !important;
+    color: #bdbdbd;
 }
 
 /* Flexbox */

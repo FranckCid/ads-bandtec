@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang='pt-br'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Prova Continuada 3 - Liberdade Econômica</title>
+    <style>
+
+        /* Geral */
+        body {
+            font-family: sans-serif;
+            background: linear-gradient(to right, #e53935, #e35d5b);
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+            background-color: white;
+        }
+
+        .cabecalho,
+        button,
+        .rodape {
+            padding: 16px;
+            background: linear-gradient(to right, #fd746c, #ff9068);
+            color: white;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .rodape {
+            text-align: center;
+            font-weight: 300;
+        }
+
+        /* Formulário */
+        .formulario {
+            padding: 16px;
+        }
+        .destaque {
+            background-color: #ffc400;
+            color: #333;
+            padding: 8px;
+        }
+
+        .sucesso {
+            color: #289719;
+            margin-top: 8px;
+        }
+
+        /* Comum */
+        button {
+            border: none;
+        }
+
+        input {
+            margin: 8px 0;
+            padding: 8px;
+        }
+
+        a{
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Análise */
+        .analise {
+            padding: 16px;
+        }
+
+        .analise:hover {
+            box-shadow: 0 0 10px rgba(0, 0, 0, .3);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header class="cabecalho">
+            Liberdade Econômica <span class="destaque">Prova Continuada 3</span>
+        </header>
+        <main class="corpo">
+            <div class='formulario'>
+                <div>
+                    <label for='pais_nome'>Nome</label>
+                    <br>
+                    <input type='text' id='pais_nome' placeholder='Ex. Brasil'>
+                </div>
+                <div>
+                    <label for='pais_populacao'>População</label>
+                    <br>
+                    <input type='number' id='pais_populacao' placeholder='Ex. 250000000'>
+                </div>
+                <div>
+                    <label for='pais_liberdade'>Grau de liberdade econômica</label>
+                    <br>
+                    <input type='number' id='pais_liberdade' placeholder='Ex. 30'>
+                </div>
+                <button type='button' onclick='cadastrar()'>Cadastrar País</button>
+                <button type='button' onclick='analisar()'>Analisar</button>
+                <div id="sucesso_cadastro" class='sucesso'></div>
+            </div>
+            <hr>
+            <div>
+                <div id="res_analise"></div>
+
+            </div>
+        </main>
+        <footer class="rodape"><a href="https://behance.net/franckcid">Francisco Cidade Homem Júnior</a> - Turma B</footer>
+    </div>
+
+</body>
+
+</html>
+<script>
+    var paises = []
+    var containerAnalises = res_analise
+    var sucessoCadastro = sucesso_cadastro
+
+    function exibirSucesso() {
+        sucessoCadastro.innerHTML = 'País cadastrado com sucesso!'
+    }
+
+    function esconderSucesso() {
+        sucessoCadastro.innerHTML = ''
+    }
+
+    function cadastrar() {
+        var pais = {
+            nome: pais_nome.value,
+            populacao: Number(pais_populacao.value),
+            liberdade: Number(pais_liberdade.value),
+        }
+
+        if (pais.populacao < 1000 || pais.liberdade < 0 || pais.liberdade > 100 || pais.nome == '') {
+            alert('Entradas inválidas!')
+            esconderSucesso()
+        } else {
+            paises.push(pais)
+            exibirSucesso()
+        }
+
+    }
+
+    function limparAnalises() {
+        esconderSucesso()
+        containerAnalises.innerHTML = ''
+    }
+
+    function criarAnalise(pais) {
+
+        var novaAnalise = `
+            <div class="analise">
+
+                <p>País 1: <b>${pais.nome}</b></p>
+                <p>Categoria: <b>${pais.categoria}</b></p>
+                <p>Habitantes: <b>${pais.habitantes}</b></p>
+                <p>IDH Médio Provável: <b>${pais.idh}</b></p>
+                <p>Desemprego Médio Provável: <b>${(pais.porcentagemDesemprego * 100).toFixed(0)}%</b>, ou seja, talvez 
+                <b>${pais.desemprego.toFixed(0)}</b> estejam sem emprego</p>
+
+                <img src="${pais.img}" alt="${pais.nome}">
+                <hr/>
+            </div>
+        `
+
+        containerAnalises.innerHTML += novaAnalise
+    }
+
+    function calcularAnalise(pais) {
+        // País calculado
+        var paisCalculado = {
+            nome: pais.nome,
+            categoria: null,
+            habitantes: pais.populacao,
+            idh: null,
+            porcentagemDesemprego: null,
+            desemprego: null,
+            img: null
+        }
+
+        // Liberdade, IDH Médio e Porcentagem de desemprego
+        var liberdade = ''
+        var idhMedio = 0
+        var porcDesemprego = 0
+        var imagem = ''
+
+        if (pais.liberdade > 80) {
+            liberdade = 'Livre'
+            idhMedio = 0.85
+            porcDesemprego = .05
+            imagem = 'livre.jpg'
+        } else if (pais.liberdade > 70) {
+            liberdade = 'Quase livre'
+            idhMedio = 0.77
+            porcDesemprego = .07
+            imagem = 'quaselivre.png'
+        } else if (pais.liberdade > 60) {
+            liberdade = 'Moderadamente livre'
+            idhMedio = 0.72
+            porcDesemprego = .1
+            imagem = 'moderadamentelivre.jpg'
+        } else if (pais.liberdade > 50) {
+            liberdade = 'Quase reprimido'
+            idhMedio = 0.65
+            porcDesemprego = .15
+            imagem = 'quasereprimido.jpg'
+        } else {
+            liberdade = 'Reprimido'
+            idhMedio = 0.5
+            porcDesemprego = .2
+            imagem = 'reprimido.jpeg'
+        }
+
+        paisCalculado.categoria = liberdade
+        paisCalculado.idh = idhMedio
+        paisCalculado.porcentagemDesemprego = porcDesemprego
+        paisCalculado.img = imagem
+
+        // Número médio de desempregados
+
+        var numDesempregados = paisCalculado.habitantes * porcDesemprego
+        paisCalculado.desemprego = numDesempregados
+
+        criarAnalise(paisCalculado)
+    }
+
+    function analisar() {
+
+        limparAnalises()
+
+        for (var i = 0; i < paises.length; i++) {
+            var pais = paises[i]
+            calcularAnalise(pais)
+        }
+
+    }
+
+</script>
